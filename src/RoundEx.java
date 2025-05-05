@@ -8,7 +8,8 @@ public class RoundEx {
             {1,1,2,3},
             {3,1,1,2}
     };
-    GfCalc gf;
+    private final GfCalc gf;
+    private final Sbox sbox;
     int round = 0;
 
     public RoundEx(int[][] state, byte[][] key, int round) {
