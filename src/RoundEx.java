@@ -74,15 +74,24 @@ public class RoundEx {
 
     }
 
-    public int[][] onlyAddRoundKeyStep(){
+    public void firstRound(){
         addRoundKey();
         return state;
     }
 
-    public int[][] everyStep(){
+    public void middleRound(){
+        subBytesInRound();
         shiftRows();
         mixColumns();
         addRoundKey();
+    }
+
+    public void lastRound(){
+        subBytesInRound();
+        shiftRows();
+        addRoundKey();
+    }
+    public int[][] getState() {
         return state;
     }
 }
