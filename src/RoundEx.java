@@ -20,6 +20,7 @@ public class RoundEx {
         this.key = key;
         this.gf = new GfCalc();
         this.round = round;
+        this.sbox = new Sbox();
     }
 
     private void addRoundKey(){
