@@ -63,6 +63,13 @@ public class RoundEx {
         }
     }
 
+    private void subBytesInRound() {
+        for (int row = 0; row < 4; row++) {
+            for (int col = 0; col < 4; col++) {
+                state[row][col] = sbox.subBytes(state[row][col] & 0xFF);
+            }
+        }
+    }
     private void invMixColumns(){
 
     }
