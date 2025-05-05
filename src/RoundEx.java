@@ -61,6 +61,7 @@ public class RoundEx {
                 }
             }
         }
+        state = temp;
     }
 
     private void subBytesInRound() {
