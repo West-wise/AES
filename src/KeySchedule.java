@@ -60,6 +60,17 @@ public class KeySchedule {
         return data;
     }
 
+    public int[][] convertState(String input){
+        int[][] state = new int[4][4];
+        byte[] inputBytes = hexToByte(input);
+        for(int col = 0; col < 4; col++){
+            for(int row = 0; row < 4; row++){
+                state[row][col] = inputBytes[col * 4 + row] & 0xFF;
+            }
+        }
+        return state;
+    }
+
     public void printKey(byte[] key){
         System.out.println("------------Round Keys------------");
         StringBuilder sb = new StringBuilder();
