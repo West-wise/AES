@@ -12,8 +12,11 @@ public class RoundEx {
     private final Sbox sbox;
     int round = 0;
 
-    public RoundEx(int[][] state, byte[][] key, int round) {
-        this.state = state;
+    public RoundEx(int[][] inputState, byte[][] key, int round) {
+        this.state = new int[4][4];
+        for(int i = 0; i<4; i++){
+            System.arraycopy(inputState[i],0, this.state[i],0, 4);
+        }
         this.key = key;
         this.gf = new GfCalc();
         this.round = round;
