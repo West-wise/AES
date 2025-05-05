@@ -76,7 +76,6 @@ public class RoundEx {
 
     public void firstRound(){
         addRoundKey();
-        return state;
     }
 
     public void middleRound(){
