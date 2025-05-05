@@ -83,4 +83,15 @@ public class KeySchedule {
         }
         System.out.println(sb.toString());
     }
+
+    public byte[][] convertRoundKey(byte[] roundKey, int round){
+        byte[][] nexKey = new byte[4][4];
+        int start = round * 16;
+        for(int col = 0; col <4; col++){
+            for(int row = 0; row < 4; row++){
+                nexKey[row][col] = roundKey[start + (col * 4 + row)];
+            }
+        }
+        return nexKey;
+    }
 }
