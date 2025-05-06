@@ -32,10 +32,14 @@ public class Sbox {
         return matrixMultiply(byteToMatrix(inv_value)) ^ SBOX_Y;
     }
 
+//    public int invSubBytes(int value){
+//        int[] vec = byteToMatrix(value ^ SBOX_Y);
+//        int preimage = matrixMultiplyInv(vec);
+//        return gf.gfInverse(preimage); // Inv(S(x)) = Inv(A*x ⊕ c)
+//    }
     public int invSubBytes(int value){
-        int[] vec = byteToMatrix(value ^ SBOX_Y);
-        int preimage = matrixMultiplyInv(vec);
-        return gf.gfInverse(preimage); // Inv(S(x)) = Inv(A*x ⊕ c)
+        int inv = matrixMultiplyInv(byteToMatrix(value ^ SBOX_Y));
+        return gf.gfInverse(inv);
     }
     private int[] byteToMatrix(int value){
         int[] matrix = new int[8];
