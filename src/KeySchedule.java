@@ -10,12 +10,14 @@ public class KeySchedule {
     };
 
     private final Sbox sbox;
+    private final UtilFunc utilFunc;
 
     public KeySchedule(String key) {
         this.sbox = new Sbox();
+        this.utilFunc = new UtilFunc();
     }
     public byte[] genKey(String Key) {
-        byte[] key = hexToByte(Key);
+        byte[] key = utilFunc.hexStringToByteArray(Key);
         // AES-128: 11개 라운드 키, 각 16바이트 = 총 176바이트
         byte[] expandedKey = new byte[4 * Nb * (Nr + 1)]; // 4 * 4 * 11 = 176
         System.arraycopy(key, 0, expandedKey, 0, 4 * Nk);
@@ -50,19 +52,9 @@ public class KeySchedule {
         return result;
     }
 
-    private byte[] hexToByte(String hexKey){
-        int len = hexKey.length();
-        byte[] data = new byte[len/2];
-        for(int i = 0; i < len; i+= 2){
-            data[i/2] = (byte) ((Character.digit(hexKey.charAt(i), 16) << 4)
-            + Character.digit(hexKey.charAt(i+1), 16));
-        }
-        return data;
-    }
-
     public int[][] convertState(String input){
         int[][] state = new int[4][4];
-        byte[] inputBytes = hexToByte(input);
+        byte[] inputBytes = utilFunc.hexStringToByteArray(input);
         for(int col = 0; col < 4; col++){
             for(int row = 0; row < 4; row++){
                 state[row][col] = inputBytes[col * 4 + row] & 0xFF;

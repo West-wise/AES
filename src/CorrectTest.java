@@ -17,10 +17,10 @@ public class CorrectTest {
         utilFunc = new UtilFunc();
     }
 
-    private void correctTest() throws NoSuchPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
+    public void correctTest() throws NoSuchPaddingException, NoSuchAlgorithmException, IllegalBlockSizeException, BadPaddingException, InvalidKeyException {
         // HEX 문자열 → 바이트 배열 변환
-        byte[] keyBytes = hexStringToByteArray(key);
-        byte[] plainBytes = hexStringToByteArray(plainText);
+        byte[] keyBytes = utilFunc.hexStringToByteArray(key);
+        byte[] plainBytes = utilFunc.hexStringToByteArray(plainText);
 
         // 키 객체 생성
         SecretKeySpec keyClass = new SecretKeySpec(keyBytes, "AES");
@@ -33,23 +33,7 @@ public class CorrectTest {
         byte[] encrypted = cipher.doFinal(plainBytes);
 
         // 결과 출력 (Hex로 출력)
-        System.out.println("암호문: " + bytesToHex(encrypted));
-
-    }
-    public static byte[] hexStringToByteArray(String s) {
-        int len = s.length();
-        byte[] data = new byte[len / 2];
-        for (int i = 0; i < len; i += 2) {
-            data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
-                    + Character.digit(s.charAt(i+1), 16));
-        }
-        return data;
-    }
-    public static String bytesToHex(byte[] bytes) {
-        StringBuilder sb = new StringBuilder();
-        for (byte b : bytes) {
-            sb.append(String.format("%02X", b));
-        }
-        return sb.toString();
+        String text = utilFunc.bytesToHex(encrypted);
+        System.out.println("암호문: " + text);
     }
 }
