@@ -17,13 +17,15 @@ public class UtilFunc {
         }
         return data;
     }
-    public void printCiphertext(int[][] state) {
-        System.out.print("암호문: ");
+    public String printCiphertext(int[][] state) {
+        StringBuilder sb = new StringBuilder();
         for (int col = 0; col < 4; col++) {
             for (int row = 0; row < 4; row++) {
                 System.out.printf("%02X", state[row][col]);
+                sb.append(String.format("%02X", state[row][col]));
             }
         }
         System.out.println();
+        return sb.toString();
     }
 }
