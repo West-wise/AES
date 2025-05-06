@@ -34,6 +34,6 @@ public class CorrectTest {
 
         // 결과 출력 (Hex로 출력)
         String text = utilFunc.bytesToHex(encrypted);
-        System.out.println("암호문: " + text);
+        System.out.println("비교 \t: " + text);
     }
 }
