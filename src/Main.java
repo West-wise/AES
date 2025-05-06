@@ -14,11 +14,13 @@ public class Main {
         KeySchedule ks = new KeySchedule(Key);
         roundKeys = ks.genKey(Key);
         for(String pt : plainTexts){
+            System.out.println("평문 \t: " + pt);
             CorrectTest ct = new CorrectTest(Key, pt);
-            EncDec ed = new EncDec(Key, ks.convertState(pt), roundKeys);
-            ed.encrypt();
-
+            EncDec ed = new EncDec(Key, roundKeys);
+            String cipherText = ed.encrypt(pt);
             ct.correctTest();
+
+            ed.decrypt(cipherText);
             System.out.println();
         }
     }
