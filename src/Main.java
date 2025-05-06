@@ -15,32 +15,12 @@ public class Main {
         roundKeys = ks.genKey(Key);
         for(String pt : plainTexts){
             CorrectTest ct = new CorrectTest(Key, pt);
-            int[][] state = ks.convertState(pt);
-            for(int round = 0; round< 11; round++){
-                byte[][] eachRoundKey = ks.convertRoundKey(roundKeys,round);
-                RoundEx roundEx = new RoundEx(state, eachRoundKey, round);
-                if(round == 0){
-                    roundEx.firstRound();
-                } else if(round < 10){
-                    roundEx.middleRound();
-                } else {
-                    roundEx.lastRound();
-                    printCiphertext(roundEx.getState());
-                }
-                state = roundEx.getState();
-            }
+            EncDec ed = new EncDec(Key, ks.convertState(pt), roundKeys);
+            ed.encrypt();
+
             ct.correctTest();
             System.out.println();
         }
-    }
-    private static void printCiphertext(int[][] state) {
-        System.out.print("암호문: ");
-        for (int col = 0; col < 4; col++) {
-            for (int row = 0; row < 4; row++) {
-                System.out.printf("%02X", state[row][col]);
-            }
-        }
-        System.out.println();
     }
 
 
