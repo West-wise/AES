@@ -1,26 +1,36 @@
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 
 public class Main {
     public static byte[] roundKeys;
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException, BadPaddingException, InvalidKeyException {
         // GF(2^8) 곱셈 테스트
 
         String Key = "2b7e151628aed2a6abf7158809cf4f3c";
-        String PlainText = "6bc1bee22e409f96e93d7e117393172a";
+        String[] plainTexts = {"6bc1bee22e409f96e93d7e117393172a", "ae2d8a571e03ac9c9eb76fac45af8e51", "30c81c46a35ce411e5fbc1191a0a52ef"};
         KeySchedule ks = new KeySchedule(Key);
         roundKeys = ks.genKey(Key);
-        int[][] state = ks.convertState(PlainText);
-        for(int round = 0; round< 11; round++){
-            byte[][] eachRoundKey = ks.convertRoundKey(roundKeys,round);
-            RoundEx roundEx = new RoundEx(state, eachRoundKey, round);
-            if(round == 0){
-                roundEx.firstRound();
-            } else if(round < 10){
-                roundEx.middleRound();
-            } else {
-                roundEx.lastRound();
-                printCiphertext(roundEx.getState());
+        for(String pt : plainTexts){
+            CorrectTest ct = new CorrectTest(Key, pt);
+            int[][] state = ks.convertState(pt);
+            for(int round = 0; round< 11; round++){
+                byte[][] eachRoundKey = ks.convertRoundKey(roundKeys,round);
+                RoundEx roundEx = new RoundEx(state, eachRoundKey, round);
+                if(round == 0){
+                    roundEx.firstRound();
+                } else if(round < 10){
+                    roundEx.middleRound();
+                } else {
+                    roundEx.lastRound();
+                    printCiphertext(roundEx.getState());
+                }
+                state = roundEx.getState();
             }
-            state = roundEx.getState();
+            ct.correctTest();
+            System.out.println();
         }
     }
     private static void printCiphertext(int[][] state) {
